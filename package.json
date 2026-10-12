@@ -1,6 +1,6 @@
 {
   "name": "career-ops-plugin-workspace-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Read-only local MCP access to the Career-Ops job workspace",
   "type": "module",
   "license": "MIT",

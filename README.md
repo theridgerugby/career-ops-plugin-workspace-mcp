@@ -87,6 +87,9 @@ client-launched process.
   This prevents inherited environment settings from silently widening access.
 - Header/URL parsing, inbox grammar and report-number CV/cover matching use
   the checkout's existing parsers. No company-name package matching.
+- Bare report paths such as `reports/010-example.md` can resolve from the
+  workspace root as well as the tracker directory. Both resolutions use the
+  same `reports/` restriction.
 - Report metadata is restricted to `.md` under `reports/`; PDF metadata to `.pdf`
   under `output/`. Symlinks/junctions inside data paths, traversal, directories,
   duplicate job identities, mismatched report labels/targets, reserved report
@@ -140,7 +143,7 @@ data, including cover-before-CV index rows, duplicate identities, stale pages,
 missing sources, path attacks and unchanged tracker bytes.
 
 Source: [theridgerugby/career-ops-plugin-workspace-mcp](https://github.com/theridgerugby/career-ops-plugin-workspace-mcp).
-Version 0.1.0 is proposed for the community registry and is not yet
+Version 0.1.1 is proposed for the community registry and is not yet
 registry-approved. The upstream registry PR pins an exact commit for review.
 Before approval, an operator who has reviewed that commit can install it
 explicitly with the existing unregistered-plugin flow:

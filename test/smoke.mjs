@@ -135,6 +135,19 @@ try {
       }
       put('data/applications.md', tracker);
     });
+    check('bare report paths resolve from tracker or workspace without widening access', () => {
+      for (const report of ['reports/010-fictional.md', './reports/010-fictional.md', '../reports/010-fictional.md']) {
+        put('data/applications.md', tracker.replace('[010](../reports/010-fictional.md)', report));
+        const file = workspace.files('application:10').report;
+        assert.ok(file.exists, report);
+        assert.strictEqual(file.path, path.join(temp, 'reports/010-fictional.md'));
+      }
+      for (const report of ['../../outside/reports/010-private.md', 'output/link/010-private.md', 'reports/../output/010-private.md']) {
+        put('data/applications.md', tracker.replace('[010](../reports/010-fictional.md)', report));
+        assert.strictEqual(workspace.files('application:10').report.reason, 'rejected-path');
+      }
+      put('data/applications.md', tracker);
+    });
     check('ordinary reads leave source files unchanged', () => {
       const before = fs.readFileSync(path.join(temp, 'data/applications.md')); workspace.summary(); workspace.list(); workspace.get('application:10'); workspace.files('application:10');
       assert.deepStrictEqual(fs.readFileSync(path.join(temp, 'data/applications.md')), before);
