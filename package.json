@@ -1,0 +1,12 @@
+{
+  "name": "career-ops-plugin-workspace-mcp",
+  "version": "0.1.0",
+  "description": "Read-only local MCP access to the Career-Ops job workspace",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "bin": { "career-ops-workspace-mcp": "bin/server.mjs" },
+  "scripts": { "test": "node test/smoke.mjs" },
+  "files": ["manifest.json", "index.mjs", "bin", "lib", "test", "skill.md", "README.md", "LICENSE"]
+}
