@@ -8,5 +8,6 @@
   "requiredEnv": [],
   "allowedHosts": [],
   "skill": "skill.md",
-  "humanInTheLoop": true
+  "humanInTheLoop": true,
+  "homepage": "https://github.com/theridgerugby/career-ops-plugin-workspace-mcp"
 }

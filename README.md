@@ -139,11 +139,22 @@ core checks exercise the actual upstream readers against fictional temporary
 data, including cover-before-CV index rows, duplicate identities, stale pages,
 missing sources, path attacks and unchanged tracker bytes.
 
-Publication is a separate step: publish a repo named
-`career-ops-plugin-workspace-mcp`, file the upstream plugin-registration issue,
-and submit an exact-SHA registry entry after maintainer review. This local
-release is not registry-approved. The proposed pipeline UI in upstream #5093
-remains separate and awaits scope confirmation.
+Source: [theridgerugby/career-ops-plugin-workspace-mcp](https://github.com/theridgerugby/career-ops-plugin-workspace-mcp).
+Version 0.1.0 is proposed for the community registry and is not yet
+registry-approved. The upstream registry PR pins an exact commit for review.
+Before approval, an operator who has reviewed that commit can install it
+explicitly with the existing unregistered-plugin flow:
+
+```sh
+node plugins.mjs add theridgerugby/career-ops-plugin-workspace-mcp --sha <reviewed-40-hex-commit>
+node plugins.mjs enable workspace-mcp --confirm
+```
+
+The installed MCP entrypoint is then
+`<checkout>/plugins.local/workspace-mcp/bin/server.mjs`; connecting it remains
+an explicit client configuration step. Installation/enablement alone starts no
+MCP service. The proposed pipeline UI in upstream #5093 remains separate and
+awaits scope confirmation.
 
 Protocol reference: [MCP stdio transport](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports),
 [initialization](https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle)

@@ -9,7 +9,7 @@ import { callTool, TOOLS } from '../lib/tools.mjs';
 import { session, serve, MAX_MESSAGE_BYTES, PROTOCOL_VERSIONS } from '../lib/protocol.mjs';
 import hooks from '../index.mjs';
 
-const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'career-ops-workspace-mcp-'));
+const temp = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'career-ops-workspace-mcp-')));
 let count = 0;
 function check(name, fn) { fn(); count++; console.log(`ok ${count} - ${name}`); }
 const put = (rel, text) => { const file = path.join(temp, rel); fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, text); };

@@ -5,6 +5,7 @@
   "type": "module",
   "license": "MIT",
   "private": true,
+  "repository": { "type": "git", "url": "https://github.com/theridgerugby/career-ops-plugin-workspace-mcp.git" },
   "engines": { "node": ">=20" },
   "bin": { "career-ops-workspace-mcp": "bin/server.mjs" },
   "scripts": { "test": "node test/smoke.mjs" },
