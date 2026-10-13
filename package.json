@@ -1,7 +1,7 @@
 {
   "name": "career-ops-plugin-workspace-mcp",
-  "version": "0.1.1",
-  "description": "Read-only local MCP access to the Career-Ops job workspace",
+  "version": "0.1.2",
+  "description": "Read-only MCP access to application rows with scores and the absolute paths and byte sizes of reports, CVs and cover letters.",
   "type": "module",
   "license": "MIT",
   "private": true,

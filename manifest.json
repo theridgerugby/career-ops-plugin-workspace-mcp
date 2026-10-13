@@ -1,9 +1,9 @@
 {
   "id": "workspace-mcp",
   "name": "Workspace MCP",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "apiVersion": 1,
-  "description": "Give an explicitly connected local agent read-only access to job-workspace metadata.",
+  "description": "Read-only MCP access to application rows with scores and the absolute paths and byte sizes of reports, CVs and cover letters.",
   "hooks": ["export"],
   "requiredEnv": [],
   "allowedHosts": [],

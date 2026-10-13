@@ -10,9 +10,9 @@ This is an independent community plugin, not an official Career-Ops surface.
 | Tool | Returns |
 | --- | --- |
 | `workspace_summary` | Tracker/inbox counts, status counts, local observation time, source diagnostics |
-| `list_jobs` | Job metadata with filters, location/company/role/status/date sorting and bounded pagination |
-| `get_job` | One exact listed job identity |
-| `get_application_files` | Report/CV/cover-letter paths, existence and missing/rejected reasons |
+| `list_jobs` | Application rows including scores, plus inbox rows, with filters, sorting and bounded pagination |
+| `get_job` | One exact listed application or inbox row, including the application's score |
+| `get_application_files` | Absolute report/CV/cover-letter paths, file sizes in bytes, existence and missing/rejected reasons |
 
 There are no write tools or configurable write mode. Status transitions,
 favorites, deletion, submission, messages, shell commands, browser control and
@@ -21,8 +21,10 @@ their bodies. Tracker notes, profile sources, credentials and root CV content
 are excluded from responses. No HTTP listener, outbound network call or key is
 required. Responses go to the explicitly connected MCP client through stdio.
 
-**Privacy:** a local MCP connection gives its client the returned job metadata
-and material paths. A cloud-backed agent may send that metadata to its model
+**Privacy:** a local MCP connection gives its client application rows including
+scores, inbox rows, and the absolute paths and byte sizes of reports, CVs and
+cover letters. Sizes are returned only for files that exist and pass the path
+checks. A cloud-backed agent may send these returned fields to its model
 provider under the client's settings. Review those settings before connecting.
 This plugin makes no third-party transmission itself and cannot enforce how the
 client uses responses.
@@ -34,6 +36,12 @@ the process. Test/smoke scripts create and remove their own temporary fixtures;
 the server implementation performs only reads.
 
 ## Connect explicitly
+
+The MCP server is started separately and runs outside the Career-Ops plugin
+engine. The engine's consent card and `plugins.lock` do not cover this server:
+they do not authorize its data access, check its code when it starts, or stop
+it when the plugin is disabled. Review the server code and exposed fields, then
+explicitly choose whether to connect it through your MCP client.
 
 Requirements: Node 20+ and a trusted Career-Ops checkout with
 `tracker-parse.mjs`, `tracker-links.mjs`, `web/src/lib/pipeline-table.mjs`,
@@ -106,11 +114,11 @@ client-launched process.
 
 ## Career-Ops plugin hook
 
-The manifest declares the existing finite `export` hook. It prints only local
-workspace counts through the engine's logger, returns `pushed: 0`, and creates
-no store or service. This hook is useful for a capability/dry-run check.
-MCP runs only through the explicit entrypoint above; no new hook kind or core
-loader change is needed.
+Enabling this plugin covers only the existing finite `export` hook. The hook
+logs local workspace counts, returns `pushed: 0`, and creates no store or
+service. It does not start or enable MCP access. The MCP server runs only
+through the separate entrypoint above; no new hook kind or core loader change
+is needed.
 
 For local development, place a reviewed copy of this directory at
 `<checkout>/plugins.local/workspace-mcp` (the folder name must match the manifest
@@ -124,9 +132,9 @@ node plugins.mjs skill workspace-mcp
 ```
 
 These commands are instructions for the operator; they are not run by the MCP
-server. Plugin enable/lock gates protect the finite export hook. Direct stdio
-startup is a separate explicit consent step, and does not bypass those gates to
-load other plugins. No dependencies or install scripts are needed.
+server. The engine's consent card and lock cover the finite export hook only.
+Connecting the separate MCP process is a decision made in the client, outside
+those controls. No dependencies or install scripts are needed.
 
 ## Verification and publication
 
@@ -143,7 +151,7 @@ data, including cover-before-CV index rows, duplicate identities, stale pages,
 missing sources, path attacks and unchanged tracker bytes.
 
 Source: [theridgerugby/career-ops-plugin-workspace-mcp](https://github.com/theridgerugby/career-ops-plugin-workspace-mcp).
-Version 0.1.1 is proposed for the community registry and is not yet
+Version 0.1.2 is proposed for the community registry and is not yet
 registry-approved. The upstream registry PR pins an exact commit for review.
 Before approval, an operator who has reviewed that commit can install it
 explicitly with the existing unregistered-plugin flow:
